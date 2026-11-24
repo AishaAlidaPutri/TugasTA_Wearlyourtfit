@@ -9,18 +9,17 @@
 ## 📱 Tech Stack
 
 ### Frontend
-- **Framework:** React Native dengan **Expo SDK 52**
+- **Framework:** React Native dengan **Expo SDK 58** (React Native 0.88.1 & React 19)
 - **Bahasa:** JavaScript (ES6+), bukan TypeScript
-- **Navigasi:** React Navigation (Bottom Tab Navigation & Native Stack Navigator)
+- **Navigasi:** React Navigation (Bottom Tab Navigation & Native Stack Navigator) dengan **Direct Access (Tanpa Wajib Login)**
 - **Image Picker:** `expo-image-picker` (memilih foto pakaian langsung dari galeri smartphone)
-- **Secure Storage:** `expo-secure-store` (penyimpanan JWT token autentikasi secara aman di perangkat)
 - **Styling:** Custom Design System bernuansa modern, minimalis, feminin, dan elegan (*soft cream, warm beige, muted pink, and dark espresso brown*).
 
 ### Backend
 - **Runtime & Framework:** Node.js & Express.js (JavaScript ES6+)
-- **Database:** PostgreSQL (Dioptimalkan untuk Neon Serverless PostgreSQL)
-- **Autentikasi:** JSON Web Token (JWT) & `bcryptjs` untuk enkripsi password
-- **Media Storage:** Cloudinary untuk upload foto pakaian secara online melalui REST API backend
+- **Database:** PostgreSQL (Dioptimalkan untuk Neon Serverless PostgreSQL & Mock SQLite/JSON Fallback)
+- **Akses Pengguna:** Direct Access Mode (Auto Guest User) â€“ seluruh fitur dapat langsung digunakan tanpa kewajiban autentikasi / login
+- **Media Storage:** Cloudinary untuk upload foto pakaian secara online melalui REST API backend (dengan Data URI offline fallback)
 - **Upload Parser:** Multer (memory stream buffer)
 - **CORS & Environment:** `cors` & `dotenv`
 
@@ -206,17 +205,10 @@ npm run ios      # Menjalankan di simulator iOS (macOS)
 
 ## 📡 Daftar Endpoint REST API
 
-Semua endpoint kecuali `/api/auth/register` dan `/api/auth/login` memerlukan header:
-`Authorization: Bearer <jwt_token>`
+> **Catatan Autentikasi:**  
+> Aplikasi ini menggunakan alur **Direct Access / Tanpa Wajib Login**. Seluruh fitur utama (Wardrobe, Outfits, Planner, Summary) dapat diakses langsung tanpa perlu login. Jika header `Authorization: Bearer <token>` tidak disertakan, backend secara otomatis menetapkan sesi pengguna bawaan (*Default Guest User*).
 
-### 1. Autentikasi (`/api/auth`)
-| Method | Endpoint | Deskripsi |
-|---|---|---|
-| `POST` | `/api/auth/register` | Mendaftarkan akun pengguna baru (`name`, `email`, `password`) |
-| `POST` | `/api/auth/login` | Masuk dan memperoleh JWT token (`email`, `password`) |
-| `GET` | `/api/auth/me` | Mengambil data akun pengguna yang sedang login |
-
-### 2. Wardrobe (`/api/wardrobe`)
+### 1. Wardrobe (`/api/wardrobe`)
 | Method | Endpoint | Deskripsi |
 |---|---|---|
 | `GET` | `/api/wardrobe` | Mengambil seluruh pakaian milik pengguna (query: `category`, `search`) |
@@ -225,7 +217,7 @@ Semua endpoint kecuali `/api/auth/register` dan `/api/auth/login` memerlukan hea
 | `PUT` | `/api/wardrobe/:id` | Memperbarui info/foto pakaian (otomatis menghapus foto lama di Cloudinary) |
 | `DELETE` | `/api/wardrobe/:id` | Menghapus pakaian dan foto terkait di Cloudinary |
 
-### 3. Outfits (`/api/outfits`)
+### 2. Outfits (`/api/outfits`)
 | Method | Endpoint | Deskripsi |
 |---|---|---|
 | `GET` | `/api/outfits` | Mengambil daftar seluruh outfit tersimpan (query: `occasion`, `search`) |
@@ -236,7 +228,7 @@ Semua endpoint kecuali `/api/auth/register` dan `/api/auth/login` memerlukan hea
 | `POST` | `/api/outfits/:id/items` | Menambahkan 1 item ke dalam outfit |
 | `DELETE` | `/api/outfits/:id/items/:itemId` | Menghapus 1 item dari outfit |
 
-### 4. Schedules / Planner (`/api/schedules`)
+### 3. Schedules / Planner (`/api/schedules`)
 | Method | Endpoint | Deskripsi |
 |---|---|---|
 | `GET` | `/api/schedules` | Mengambil daftar jadwal outfit (query: `date`, `month`) |
@@ -245,7 +237,7 @@ Semua endpoint kecuali `/api/auth/register` dan `/api/auth/login` memerlukan hea
 | `PUT` | `/api/schedules/:id` | Memperbarui jadwal outfit |
 | `DELETE` | `/api/schedules/:id` | Menghapus jadwal outfit |
 
-### 5. Profile & Home Summary
+### 4. Profile & Home Summary
 | Method | Endpoint | Deskripsi |
 |---|---|---|
 | `GET` | `/api/home/summary` | Dashboard summary (Today's Outfit, Upcoming Outfit, Wardrobe count, Outfits count) |
