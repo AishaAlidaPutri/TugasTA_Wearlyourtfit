@@ -29,7 +29,7 @@ if (isCloudinaryConfigured()) {
  * @param {string} folder - Destination folder in Cloudinary
  * @returns {Promise<{ url: string, public_id: string }>}
  */
-const uploadToCloudinary = (buffer, originalName = 'wardrobe_item', folder = 'wealy_wardrobe') => {
+const uploadToCloudinary = (buffer, originalName = 'wardrobe_item', folder = 'wearlyourfit_wardrobe') => {
   return new Promise((resolve, reject) => {
     if (!buffer || buffer.length === 0) {
       return reject(new Error('No image buffer provided for upload'));

@@ -157,11 +157,11 @@ JWT_EXPIRES_IN=7d
 # Neon PostgreSQL Connection String
 DATABASE_URL=postgresql://username:password@ep-sample.region.aws.neon.tech/neondb?sslmode=require
 
-# Cloudinary Storage
+# Cloudinary Storage (Opsional - otomatis fallback ke data URI jika dikosongkan)
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-CLOUDINARY_FOLDER=wealy_wardrobe
+CLOUDINARY_FOLDER=wearlyourfit_wardrobe
 ```
 
 Jalankan migrasi database ke Neon:

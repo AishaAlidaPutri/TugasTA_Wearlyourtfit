@@ -114,7 +114,7 @@ const createWardrobeItem = async (req, res, next) => {
       uploadResult = await cloudinaryService.uploadToCloudinary(
         imageBuffer,
         originalName,
-        'wealy_wardrobe'
+        'wearlyourfit_wardrobe'
       );
     } catch (uploadError) {
       console.error('[Upload Error]:', uploadError);
@@ -195,7 +195,7 @@ const updateWardrobeItem = async (req, res, next) => {
           const uploadResult = await cloudinaryService.uploadToCloudinary(
             imageBuffer,
             uploadOriginalName,
-            'wealy_wardrobe'
+            'wearlyourfit_wardrobe'
           );
 
           if (currentItem.cloudinary_public_id) {
